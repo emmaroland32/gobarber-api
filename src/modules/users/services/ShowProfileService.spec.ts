@@ -15,7 +15,13 @@ describe('ShowProfile', () => {
 
   it('should be able to show the profile', async () => {
     const user = await fakeUsersRepository.create({
-      name: 'John Doe',
+      username: 'Emmaroland',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      phonenumber: '+2347030588083',
+      title: 'Mr',
+      pin: '1234',
       email: 'johndoe@example.com',
       password: '123456',
     });
@@ -24,7 +30,8 @@ describe('ShowProfile', () => {
       user_id: user.id,
     });
 
-    expect(profile.name).toBe('John Doe');
+    expect(profile.firstname).toBe('Segun');
+    expect(profile.lastname).toBe('Iyanda');
     expect(profile.email).toBe('johndoe@example.com');
   });
 

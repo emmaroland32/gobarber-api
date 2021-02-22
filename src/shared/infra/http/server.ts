@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 
 import express, { Request, Response, NextFunction } from 'express';
+import session from 'express-session';
 import cors from 'cors';
 import { errors } from 'celebrate';
 import 'express-async-errors';
@@ -13,13 +14,37 @@ import routes from './routes';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
+import trim from './middlewares/trim';
+import { COOKIE_NAME, SESSION_SECRET, __PROD__ } from '@config/app';
 
 const app = express();
 
-app.use(cors({}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }),
+);
+app.use(
+  session({
+    name: COOKIE_NAME,
+
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 10, //10 years
+      httpOnly: false,
+      secure: __PROD__, // cookie only works, in https
+      sameSite: 'lax',
+    },
+    saveUninitialized: false,
+    secret: SESSION_SECRET!,
+    resave: false,
+  }),
+);
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(rateLimiter);
+app.use(trim);
+
 app.use(routes);
 
 app.use(errors());

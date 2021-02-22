@@ -20,19 +20,37 @@ describe('ListProviders', () => {
 
   it('should be able to list the profile', async () => {
     const user1 = await fakeUsersRepository.create({
-      name: 'John Doe',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      title: 'Mr',
+      phonenumber: '+2347030588083',
+      pin: '1234',
+      username: 'Emmaroland',
       email: 'johndoe@example.com',
       password: '123456',
     });
 
     const user2 = await fakeUsersRepository.create({
-      name: 'John Trê',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      title: 'Mr',
+      phonenumber: '+2347030588083',
+      pin: '1234',
+      username: 'Emmaroland',
       email: 'johntre@example.com',
       password: '123456',
     });
 
     const loggedUser = await fakeUsersRepository.create({
-      name: 'John Qua',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      title: 'Mr',
+      phonenumber: '+2347030588083',
+      pin: '1234',
+      username: 'Emmaroland',
       email: 'johnqua@example.com',
       password: '123456',
     });

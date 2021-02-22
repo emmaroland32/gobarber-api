@@ -1,4 +1,4 @@
-require("dotenv/config");
+require('dotenv/config');
 
 const devConfig = [
   {
@@ -6,15 +6,13 @@ const devConfig = [
     type: 'postgres',
     host: process.env.POSTGRES_HOST,
     port: 5432,
+    synchronize: true,
+    logging: true,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASS,
     database: process.env.POSTGRES_NAME,
-    entities: [
-      './src/modules/**/infra/typeorm/entities/*.ts'
-    ],
-    migrations: [
-      './src/shared/infra/typeorm/migrations/*.ts'
-    ],
+    entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+    migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
     cli: {
       migrationsDir: './src/shared/infra/typeorm/migrations',
     },
@@ -26,10 +24,8 @@ const devConfig = [
     port: 27017,
     database: process.env.MONGO_NAME,
     useUnifiedTopology: true,
-    entities: [
-      './src/modules/**/infra/typeorm/schemas/*.ts'
-    ]
-  }
+    entities: ['./src/modules/**/infra/typeorm/schemas/*.ts'],
+  },
 ];
 
 const prodConfig = [
@@ -41,12 +37,8 @@ const prodConfig = [
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASS,
     database: process.env.POSTGRES_NAME,
-    entities: [
-      './dist/modules/**/infra/typeorm/entities/*.js'
-    ],
-    migrations: [
-      './dist/shared/infra/typeorm/migrations/*.js'
-    ],
+    entities: ['./dist/modules/**/infra/typeorm/entities/*.js'],
+    migrations: ['./dist/shared/infra/typeorm/migrations/*.js'],
     cli: {
       migrationsDir: './dist/shared/infra/typeorm/migrations',
     },
@@ -58,10 +50,9 @@ const prodConfig = [
     port: 27017,
     database: process.env.MONGO_NAME,
     useUnifiedTopology: true,
-    entities: [
-      './dist/modules/**/infra/typeorm/schemas/*.js'
-    ]
-  }
+    entities: ['./dist/modules/**/infra/typeorm/schemas/*.js'],
+  },
 ];
 
-module.exports = process.env.NODE_ENV === 'development' ? devConfig : prodConfig;
+module.exports =
+  process.env.NODE_ENV === 'development' ? devConfig : prodConfig;

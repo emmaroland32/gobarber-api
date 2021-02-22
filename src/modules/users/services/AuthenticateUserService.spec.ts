@@ -22,7 +22,13 @@ describe('AuthentiacteUser', () => {
 
   it('should be able to authenticate', async () => {
     const user = await fakeUsersRepository.create({
-      name: 'John Doe',
+      username: 'Emmaroland',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      phonenumber: '+2347030588083',
+      title: 'Mr',
+      pin: '1234',
       email: 'johndoe@example.com',
       password: '123456',
     });
@@ -47,7 +53,13 @@ describe('AuthentiacteUser', () => {
 
   it('should not be able to authenticate with wrong password', async () => {
     await fakeUsersRepository.create({
-      name: 'John Doe',
+      username: 'Emmaroland',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      phonenumber: '+2347030588083',
+      title: 'Mr',
+      pin: '1234',
       email: 'johndoe@example.com',
       password: '123456',
     });

@@ -1,21 +1,23 @@
-import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
-import authConfig from '@config/auth';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   email: string;
   password: string;
+  config: {
+    secret: string;
+    expiresIn: string;
+  };
 }
 
 interface IResponse {
   user: User;
-  token: string;
+  access_token: string;
 }
 
 @injectable()
@@ -28,7 +30,11 @@ export default class AuthenticateUserService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
+  public async execute({
+    email,
+    password,
+    config,
+  }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -44,16 +50,19 @@ export default class AuthenticateUserService {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
+    let payload = {
+      id: user.id,
+      email: user.email,
+    };
 
-    const token = sign({}, secret, {
-      subject: user.id,
-      expiresIn,
+    const access_token = await this.usersRepository.generateAccessToken({
+      config,
+      payload,
     });
 
     return {
       user,
-      token,
+      access_token,
     };
   }
 }

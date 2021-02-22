@@ -15,6 +15,15 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
 
+import ICreditsRepository from '@modules/transactions/repositories/ICreditsRepository';
+import CreditsRepository from '@modules/transactions/infra/typeorm/repositories/CreditsRepository';
+
+import IDebitsRepository from '@modules/transactions/repositories/IDebitsRepository';
+import DebitsRepository from '@modules/transactions/infra/typeorm/repositories/DebitsRepository';
+
+import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
+import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -33,4 +42,19 @@ container.registerSingleton<IUserTokensRepository>(
 container.registerSingleton<INotificationsRepository>(
   'NotificationsRepository',
   NotificationsRepository,
+);
+
+container.registerSingleton<ICreditsRepository>(
+  'CreditsRepository',
+  CreditsRepository,
+);
+
+container.registerSingleton<IDebitsRepository>(
+  'DebitsRepository',
+  DebitsRepository,
+);
+
+container.registerSingleton<ITransactionsRepository>(
+  'TransactionsRepository',
+  TransactionsRepository,
 );

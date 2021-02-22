@@ -25,7 +25,13 @@ describe('CreateUser', () => {
 
   it('should be able to craete a new user', async () => {
     const user = await createUser.execute({
-      name: 'John Doe',
+      username: 'Emmaroland',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      phonenumber: '+2347030588083',
+      title: 'Mr',
+      pin: '1234',
       email: 'johndoe@example.com',
       password: '123456',
     });
@@ -33,16 +39,28 @@ describe('CreateUser', () => {
     expect(user).toHaveProperty('id');
   });
 
-  it('should not be able to craete a new user with same email from another', async () => {
+  it('should not be able to create a new user with same email from another', async () => {
     await createUser.execute({
-      name: 'John Doe',
+      username: 'Emmaroland',
+      firstname: 'Segun',
+      lastname: 'Iyanda',
+      othername: 'Emmanuel',
+      phonenumber: '+2347030588083',
+      title: 'Mr',
+      pin: '1234',
       email: 'johndoe@example.com',
       password: '123456',
     });
 
     await expect(
       createUser.execute({
-        name: 'John Doe',
+        username: 'Emmaroland',
+        firstname: 'Segun',
+        lastname: 'Iyanda',
+        othername: 'Emmanuel',
+        phonenumber: '+2347030588083',
+        title: 'Mr',
+        pin: '1234',
         email: 'johndoe@example.com',
         password: '123456',
       }),

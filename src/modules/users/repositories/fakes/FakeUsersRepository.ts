@@ -34,13 +34,30 @@ class FakeUsersRepository implements IUsersRepository {
   }
 
   public async create({
-    name,
+    firstname,
+    username,
+    phonenumber,
+    othername,
+    title,
+    pin,
+    lastname,
     email,
     password,
   }: ICraeteUserDTO): Promise<User> {
     const user = new User();
 
-    Object.assign(user, { id: uuid(), name, email, password });
+    Object.assign(user, {
+      id: uuid(),
+      firstname,
+      username,
+      phonenumber,
+      othername,
+      title,
+      pin,
+      lastname,
+      email,
+      password,
+    });
 
     this.users.push(user);
 

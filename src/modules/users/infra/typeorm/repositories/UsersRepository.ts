@@ -5,6 +5,8 @@ import ICraeteUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import IGenerateAccessToken from '@modules/users/dtos/IGenerateAccessToken';
+import { sign } from 'jsonwebtoken';
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
@@ -17,6 +19,17 @@ class UsersRepository implements IUsersRepository {
     const user = await this.ormRepository.findOne(id);
 
     return user;
+  }
+
+  public async generateAccessToken({
+    payload,
+    config,
+  }: IGenerateAccessToken): Promise<string> {
+    const access_token = sign(payload, config.secret, {
+      subject: payload.id,
+      expiresIn: config.expiresIn,
+    });
+    return access_token;
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
@@ -44,11 +57,33 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async create({
-    name,
+    firstname,
+    lastname,
+    phonenumber,
+    pin,
+    username,
+    othername,
+    title,
     email,
     password,
+    role,
+    avatar,
+    data,
   }: ICraeteUserDTO): Promise<User> {
-    const user = this.ormRepository.create({ name, email, password });
+    const user = this.ormRepository.create({
+      firstname,
+      lastname,
+      phonenumber,
+      pin,
+      username,
+      othername,
+      title,
+      email,
+      password,
+      role,
+      avatar,
+      data,
+    });
 
     await this.ormRepository.save(user);
 
@@ -57,6 +92,11 @@ class UsersRepository implements IUsersRepository {
 
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
+  }
+
+  public capitalize(str: string): string | undefined {
+    // converting first letter to uppercase
+    return str.replace(/^./, str[0].toUpperCase());
   }
 }
 

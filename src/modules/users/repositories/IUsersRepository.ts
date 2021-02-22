@@ -1,6 +1,7 @@
 import User from '@modules/users/infra/typeorm/entities/User';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
+import IGenerateAccessToken from '../dtos/IGenerateAccessToken';
 
 export default interface IUsersRepository {
   findAllProviders(data: IFindAllProvidersDTO): Promise<User[]>;
@@ -8,4 +9,6 @@ export default interface IUsersRepository {
   findByEmail(email: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): Promise<User>;
   save(user: User): Promise<User>;
+  generateAccessToken(data: IGenerateAccessToken): Promise<string>;
+  capitalize(str: string): string | undefined;
 }

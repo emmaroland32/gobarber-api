@@ -30,6 +30,7 @@ export default function ensureAuthenticated(
 
     req.user = {
       id: sub,
+      token: token,
     };
 
     return next();

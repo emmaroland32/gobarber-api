@@ -41,15 +41,15 @@ class SendForgotPasswordEmailSercice {
 
     await this.mailProvider.sendMail({
       to: {
-        name: user.name,
+        name: user.firstname + ' ' + user.lastname,
         email: user.email,
       },
-      subject: '[GoBarber] Recuperação de senha',
+      subject: 'Fusevest Password reset',
       templateData: {
         file: forgotPasswordTempalte,
         variables: {
-          name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          name: user.firstname,
+          link: `${process.env.APP_WEB_URL}/pages/auth/reset-password?token=${token}`,
         },
       },
     });
